@@ -31,12 +31,12 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 2. ECRAN D'ACCUEIL (POUR LANCER LA MUSIQUE) --- */
+        /* --- 2. ECRAN D'ACCUEIL --- */
         #welcome-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-color: #fff0f5;
-            z-index: 9999; /* Tout au dessus */
+            z-index: 9999;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -84,7 +84,7 @@
             justify-content: center;
             min-height: 100vh;
             padding-bottom: 100px;
-            opacity: 0; /* Caché au début */
+            opacity: 0;
             transition: opacity 1s ease-in;
         }
 
@@ -226,7 +226,6 @@
             bottom: 20px;
             right: 20px;
             z-index: 1000;
-            /* Caché tant qu'on n'est pas entré */
             opacity: 0; 
             transition: opacity 1s;
         }
@@ -318,7 +317,7 @@
                 <h2 class="rsvp-title">Réponse attendue</h2>
                 <p style="margin-bottom: 20px;">Avant le 08 février 2026</p>
 
-                <form id="rsvp-form" action="https://formspree.io/f/TON_ID_ICI" method="POST">
+                <form id="rsvp-form" action="https://script.google.com/macros/s/AKfycbz1hgDsxNRFFg_tjjmxic1SFUXNlJquqxYJhMwjCscE_CklFR_fJnpucDebODfige9nzw/exec" method="POST">
                     <input type="text" name="nom" placeholder="Noms & Prénoms" required>
                     <select id="presence-select" name="presence" required>
                         <option value="" disabled selected>Serez-vous des nôtres ?</option>
@@ -355,14 +354,13 @@
                 vinyl.classList.add('spinning');
             }).catch(error => {
                 console.log("Erreur lecture audio : " + error);
-                alert("La musique n'a pas pu se lancer. Vérifiez que 'musique.mp3' est bien dans le dossier.");
+                // On ne met pas d'alerte pour ne pas gêner, ça jouera peut-être après
             });
 
             // Masquer l'écran d'accueil
             welcomeScreen.style.opacity = '0';
             setTimeout(() => {
                 welcomeScreen.style.display = 'none';
-                // Afficher le contenu
                 mainContent.style.opacity = '1';
                 musicControl.style.opacity = '1';
             }, 1000);
@@ -381,7 +379,7 @@
             }
         });
 
-        // --- 3. FORMULAIRE ---
+        // --- 3. FORMULAIRE (Envoi Google Sheet) ---
         const selectPresence = document.getElementById('presence-select');
         const countContainer = document.getElementById('count-container');
         const countInput = document.getElementById('guest-count');
@@ -401,25 +399,34 @@
 
         form.addEventListener('submit', async function(event) {
             event.preventDefault();
+            
+            // Bouton en chargement
+            const btn = form.querySelector('button');
+            const originalText = btn.innerText;
+            btn.innerText = "Envoi en cours...";
+            btn.disabled = true;
+
             const data = new FormData(form);
             try {
-                const response = await fetch(form.action, {
+                // Utilisation de mode: 'no-cors' pour envoyer vers Google Script sans erreur bloquante
+                await fetch(form.action, {
                     method: form.method,
                     body: data,
-                    headers: { 'Accept': 'application/json' }
+                    mode: 'no-cors'
                 });
-                if (response.ok) {
-                    form.style.display = 'none';
-                    successMsg.style.display = 'block';
-                } else {
-                    alert("Oups, une erreur est survenue.");
-                }
+                
+                // On suppose que ça a marché (Google Script ne renvoie pas de confirmation lisible en no-cors)
+                form.style.display = 'none';
+                successMsg.style.display = 'block';
+                
             } catch (error) {
-                alert("Erreur de connexion.");
+                alert("Erreur de connexion. Vérifiez votre internet.");
+                btn.innerText = originalText;
+                btn.disabled = false;
             }
         });
 
-        // --- 4. ANIMATION TÉTINES ---
+        // --- 4. ANIMATION TÉTINES (Accélérée) ---
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let tetinesArray = [];
@@ -446,14 +453,14 @@
                 this.color = Math.random() > 0.5 ? '#d48c96' : '#c79685';
             }
             update() {
-                this.speedY += 0.05; 
+                this.speedY += 0.05; // Accélération
                 this.y -= this.speedY;
                 this.x += this.speedX;
                 this.angle += this.spin;
                 if (this.y < -100) {
                     this.y = canvas.height + 100;
                     this.x = Math.random() * canvas.width;
-                    this.speedY = this.baseSpeed;
+                    this.speedY = this.baseSpeed; // Reset vitesse
                 }
             }
             draw() {

@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
+        /* --- 1. CONFIGURATION --- */
         :root {
             --rose-bg-start: #fff0f5;
             --rose-bg-end: #ffe4e9;
@@ -30,6 +31,45 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* --- 2. ECRAN D'ACCUEIL (POUR LANCER LA MUSIQUE) --- */
+        #welcome-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #fff0f5;
+            z-index: 9999; /* Tout au dessus */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-out;
+        }
+
+        .welcome-names {
+            font-family: 'Parisienne', cursive;
+            font-size: 3.5rem;
+            color: var(--rose-fonce);
+            margin-bottom: 30px;
+        }
+
+        .btn-enter {
+            background: transparent;
+            border: 2px solid var(--or-rose);
+            color: var(--or-rose);
+            padding: 15px 40px;
+            font-family: 'Quicksand', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .btn-enter:hover {
+            background: var(--or-rose);
+            color: white;
+        }
+
+        /* --- 3. ANIMATION DE FOND --- */
         #canvas-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -37,12 +77,15 @@
             pointer-events: none;
         }
 
+        /* --- 4. LA CARTE --- */
         .main-wrapper {
             padding: 20px;
             display: flex;
             justify-content: center;
             min-height: 100vh;
             padding-bottom: 100px;
+            opacity: 0; /* Caché au début */
+            transition: opacity 1s ease-in;
         }
 
         .card {
@@ -61,6 +104,7 @@
             text-align: center;
         }
 
+        /* --- ELEMENTS DECO --- */
         .fleur-angle {
             position: absolute;
             width: 180px;
@@ -69,10 +113,10 @@
             mix-blend-mode: multiply;
             opacity: 0.9;
         }
-        
         .top-right { top: -50px; right: -40px; }
         .bottom-left { bottom: -50px; left: -40px; }
 
+        /* --- TYPO --- */
         h1.main-title {
             font-family: 'Parisienne', cursive;
             font-size: 4.8rem; 
@@ -91,13 +135,9 @@
             font-weight: 500;
         }
 
-        .text-body {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            font-weight: 500;
-        }
+        .text-body { font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; font-weight: 500; }
 
+        /* DATE BADGE */
         .date-badge {
             display: inline-block;
             border: 2px solid var(--rose-fonce);
@@ -112,7 +152,6 @@
             color: var(--rose-fonce);
             background: rgba(255,255,255,0.8);
         }
-        
         .date-num { font-family: 'Great Vibes', cursive; font-size: 3rem; line-height: 1; }
         .date-txt { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
         .time { font-weight: bold; color: var(--or-rose); font-size: 1.2rem; display: block; margin-top: 10px;}
@@ -127,6 +166,7 @@
             font-style: italic;
         }
 
+        /* --- FORMULAIRE --- */
         .rsvp-section { margin-top: 50px; }
         .rsvp-title {
             font-family: 'Great Vibes', cursive;
@@ -147,13 +187,9 @@
             color: var(--texte);
             outline: none;
         }
-        
-        textarea {
-            border-radius: 20px;
-            resize: vertical;
-        }
+        textarea { border-radius: 20px; resize: vertical; }
 
-        button {
+        button.submit-btn {
             background: var(--rose-fonce);
             color: white;
             font-family: 'Quicksand', sans-serif;
@@ -169,10 +205,9 @@
             box-shadow: 0 5px 15px rgba(212, 140, 150, 0.4);
             transition: transform 0.2s;
         }
-        button:active { transform: scale(0.98); }
+        button.submit-btn:active { transform: scale(0.98); }
 
         .hidden { display: none; }
-
         .success-message {
             display: none;
             background-color: #e8f5e9;
@@ -185,11 +220,15 @@
             font-size: 1.1rem;
         }
 
+        /* --- MUSIQUE FLOTTANTE --- */
         .music-wrapper {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 1000;
+            /* Caché tant qu'on n'est pas entré */
+            opacity: 0; 
+            transition: opacity 1s;
         }
 
         .vinyl-btn {
@@ -206,52 +245,51 @@
             position: relative;
         }
         .vinyl-btn::after {
-            content: '';
-            width: 15px;
-            height: 15px;
-            background: #fff;
-            border-radius: 50%;
-            position: absolute;
-            z-index: 2;
+            content: ''; width: 15px; height: 15px; background: #fff; border-radius: 50%; position: absolute; z-index: 2;
         }
         .vinyl-btn.spinning { animation: rotateVinyl 4s linear infinite; }
         @keyframes rotateVinyl { 100% { transform: rotate(360deg); } }
-        .music-icon {
-            font-size: 24px;
-            color: white;
-            z-index: 3;
-            pointer-events: none;
-        }
+        .music-icon { font-size: 24px; color: white; z-index: 3; pointer-events: none; }
+        .vinyl-btn.spinning .music-icon { display: none; }
 
+        /* OPTIMISATION MOBILE */
         @media (max-width: 600px) {
             .card { padding: 40px 20px; margin-top: 20px; }
-            h1.main-title { font-size: 3.5rem; }
+            h1.main-title { font-size: 4rem; line-height: 1.2; }
             h2.names { font-size: 2.2rem; }
-            .fleur-angle { width: 130px; }
+            .fleur-angle { width: 130px; opacity: 0.8; }
+            .top-right { top: -30px; right: -20px; }
+            .bottom-left { bottom: -30px; left: -20px; }
         }
     </style>
 </head>
 <body>
 
+    <div id="welcome-screen">
+        <h2 class="welcome-names">Anael & Gary</h2>
+        <button class="btn-enter" onclick="enterSite()">Entrer</button>
+    </div>
+
     <canvas id="canvas-bg"></canvas>
 
-    <div class="music-wrapper">
-        <div id="vinyl" class="vinyl-btn">
-            <span id="music-symbol" class="music-icon">♫</span>
+    <div class="music-wrapper" id="music-control">
+        <div id="vinyl" class="vinyl-btn spinning">
+            <span class="music-icon">♫</span>
         </div>
     </div>
     
-    <audio id="audio-player" loop preload="auto">
+    <audio id="audio-player" loop>
         <source src="musique.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="main-wrapper">
+    <div class="main-wrapper" id="main-content">
         <div class="card">
-            <img src="haut-droite.png" alt="" class="fleur-angle top-right">
-            <img src="bas-gauche.png" alt="" class="fleur-angle bottom-left">
+            <img src="haut-droite.png" alt="Fleurs" class="fleur-angle top-right">
+            <img src="bas-gauche.png" alt="Fleurs" class="fleur-angle bottom-left">
 
             <h2 class="names">Anael & Gary</h2>
             <p class="text-body">sont heureux de vous convier à célébrer la naissance de</p>
+            
             <h1 class="main-title">Tara Zohar</h1>
             
             <p class="text-body">
@@ -280,20 +318,18 @@
                 <h2 class="rsvp-title">Réponse attendue</h2>
                 <p style="margin-bottom: 20px;">Avant le 08 février 2026</p>
 
-                <form id="rsvp-form" action="https://formspree.io/f/votre_id" method="POST">
+                <form id="rsvp-form" action="https://formspree.io/f/TON_ID_ICI" method="POST">
                     <input type="text" name="nom" placeholder="Noms & Prénoms" required>
                     <select id="presence-select" name="presence" required>
                         <option value="" disabled selected>Serez-vous des nôtres ?</option>
                         <option value="Present">Oui, présent(e) avec joie</option>
                         <option value="Absent">Non, absent(e) à regret</option>
                     </select>
-
                     <div id="count-container" class="hidden">
                         <input type="number" id="guest-count" name="nombre_personnes" placeholder="Nombre de personnes" min="1">
                     </div>
-
                     <textarea name="message" rows="3" placeholder="Un petit mot pour Gary & Anael ? (Optionnel)"></textarea>
-                    <button type="submit">Envoyer votre réponse</button>
+                    <button type="submit" class="submit-btn">Envoyer votre réponse</button>
                 </form>
 
                 <div id="success-msg" class="success-message">
@@ -304,7 +340,48 @@
     </div>
 
     <script>
-        // --- 1. LOGIQUE FORMULAIRE ---
+        // --- 1. ENTRER SUR LE SITE (Gère le son) ---
+        const audio = document.getElementById('audio-player');
+        const vinyl = document.getElementById('vinyl');
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const mainContent = document.getElementById('main-content');
+        const musicControl = document.getElementById('music-control');
+        let isPlaying = false;
+
+        function enterSite() {
+            // Lancer la musique
+            audio.play().then(() => {
+                isPlaying = true;
+                vinyl.classList.add('spinning');
+            }).catch(error => {
+                console.log("Erreur lecture audio : " + error);
+                alert("La musique n'a pas pu se lancer. Vérifiez que 'musique.mp3' est bien dans le dossier.");
+            });
+
+            // Masquer l'écran d'accueil
+            welcomeScreen.style.opacity = '0';
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+                // Afficher le contenu
+                mainContent.style.opacity = '1';
+                musicControl.style.opacity = '1';
+            }, 1000);
+        }
+
+        // --- 2. CONTROLE BOUTON VINYLE ---
+        vinyl.addEventListener('click', () => {
+            if (!isPlaying) {
+                audio.play();
+                vinyl.classList.add('spinning');
+                isPlaying = true;
+            } else {
+                audio.pause();
+                vinyl.classList.remove('spinning');
+                isPlaying = false;
+            }
+        });
+
+        // --- 3. FORMULAIRE ---
         const selectPresence = document.getElementById('presence-select');
         const countContainer = document.getElementById('count-container');
         const countInput = document.getElementById('guest-count');
@@ -335,83 +412,79 @@
                     form.style.display = 'none';
                     successMsg.style.display = 'block';
                 } else {
-                    alert("Oups, une erreur est survenue lors de l'envoi.");
+                    alert("Oups, une erreur est survenue.");
                 }
             } catch (error) {
-                alert("Erreur de connexion au serveur.");
+                alert("Erreur de connexion.");
             }
         });
 
-        // --- 2. LOGIQUE MUSIQUE ---
-        const vinyl = document.getElementById('vinyl');
-        const audio = document.getElementById('audio-player');
-        const musicSymbol = document.getElementById('music-symbol');
-
-        vinyl.addEventListener('click', function() {
-            if (audio.paused) {
-                audio.play().then(() => {
-                    vinyl.classList.add('spinning');
-                    musicSymbol.innerText = "⏸";
-                }).catch(e => {
-                    console.error("Erreur lecture audio:", e);
-                    alert("Le fichier musique.mp3 est introuvable ou bloqué.");
-                });
-            } else {
-                audio.pause();
-                vinyl.classList.remove('spinning');
-                musicSymbol.innerText = "♫";
-            }
-        });
-
-        // --- 3. ANIMATION PARTICULES (CANVAS) ---
+        // --- 4. ANIMATION TÉTINES ---
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resize() {
+        let tetinesArray = [];
+        
+        function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-        window.addEventListener('resize', resize);
-        resize();
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-        class Particle {
+        const tetinePath = new Path2D("M256 0C167.6 0 96 71.6 96 160c0 48.7 21.8 92.8 56.4 122.9C139.1 298.6 128 321.3 128 346.7c0 47.1 38.2 85.3 85.3 85.3h85.3c47.1 0 85.3-38.2 85.3-85.3 0-25.3-11.1-48.1-24.4-63.7C394.2 252.8 416 208.7 416 160 416 71.6 344.4 0 256 0zm0 48c64 0 112 45.4 112 106.7S320 261.3 256 261.3 144 215.9 144 154.7 192 48 256 48zm0 320h-64c-8.8 0-16-7.2-16-16s7.2-16 16-16h64c8.8 0 16 7.2 16 16s-7.2 16-16 16z");
+
+        class Tetine {
             constructor() {
-                this.init();
-            }
-            init() {
                 this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height - canvas.height;
-                this.size = Math.random() * 4 + 1;
-                this.speed = Math.random() * 1 + 0.5;
-                this.velX = Math.random() * 0.5 - 0.25;
-                this.opacity = Math.random() * 0.5 + 0.2;
+                this.y = canvas.height + Math.random() * 200; 
+                this.size = Math.random() * 0.04 + 0.03; 
+                this.baseSpeed = Math.random() * 2 + 1; 
+                this.speedY = this.baseSpeed;
+                this.speedX = Math.random() * 0.5 - 0.25; 
+                this.angle = Math.random() * 360;
+                this.spin = Math.random() * 0.02 - 0.01; 
+                this.color = Math.random() > 0.5 ? '#d48c96' : '#c79685';
             }
             update() {
-                this.y += this.speed;
-                this.x += this.velX;
-                if (this.y > canvas.height) this.init();
+                this.speedY += 0.05; 
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                this.angle += this.spin;
+                if (this.y < -100) {
+                    this.y = canvas.height + 100;
+                    this.x = Math.random() * canvas.width;
+                    this.speedY = this.baseSpeed;
+                }
             }
             draw() {
-                ctx.fillStyle = `rgba(212, 140, 150, ${this.opacity})`;
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.scale(this.size, this.size);
+                ctx.rotate(this.angle);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = 0.3; 
+                ctx.fill(tetinePath);
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.arc(256, 420, 60, 0, Math.PI*2);
                 ctx.fill();
+                ctx.restore();
             }
         }
-
-        for (let i = 0; i < 70; i++) {
-            particles.push(new Particle());
+        function init() {
+            tetinesArray = [];
+            for (let i = 0; i < 30; i++) {
+                tetinesArray.push(new Tetine());
+            }
         }
-
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            for (let i = 0; i < tetinesArray.length; i++) {
+                tetinesArray[i].update();
+                tetinesArray[i].draw();
+            }
             requestAnimationFrame(animate);
         }
+        init();
         animate();
     </script>
 </body>

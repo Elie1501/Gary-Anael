@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 1. COULEURS DOUCES (ROSE) --- */
         :root {
             --rose-bg-start: #fff0f5;
             --rose-bg-end: #ffe4e9;
@@ -31,7 +30,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 2. LE CANVAS (LES TÉTINES PARTOUT) --- */
         #canvas-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -39,7 +37,6 @@
             pointer-events: none;
         }
 
-        /* --- 3. LA CARTE --- */
         .main-wrapper {
             padding: 20px;
             display: flex;
@@ -64,7 +61,6 @@
             text-align: center;
         }
 
-        /* --- FLEURS --- */
         .fleur-angle {
             position: absolute;
             width: 180px;
@@ -77,8 +73,6 @@
         .top-right { top: -50px; right: -40px; }
         .bottom-left { bottom: -50px; left: -40px; }
 
-        /* --- 4. TYPOGRAPHIE --- */
-        
         h1.main-title {
             font-family: 'Parisienne', cursive;
             font-size: 4.8rem; 
@@ -104,7 +98,6 @@
             font-weight: 500;
         }
 
-        /* BADGE DATE */
         .date-badge {
             display: inline-block;
             border: 2px solid var(--rose-fonce);
@@ -124,7 +117,6 @@
         .date-txt { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
         .time { font-weight: bold; color: var(--or-rose); font-size: 1.2rem; display: block; margin-top: 10px;}
 
-        /* NOTICE */
         .polite-notice {
             background-color: #fff0f3;
             border-radius: 15px;
@@ -135,7 +127,6 @@
             font-style: italic;
         }
 
-        /* --- 5. FORMULAIRE --- */
         .rsvp-section { margin-top: 50px; }
         .rsvp-title {
             font-family: 'Great Vibes', cursive;
@@ -194,7 +185,6 @@
             font-size: 1.1rem;
         }
 
-        /* --- 6. BOUTON MUSIQUE --- */
         .music-wrapper {
             position: fixed;
             bottom: 20px;
@@ -232,21 +222,13 @@
             z-index: 3;
             pointer-events: none;
         }
-        .vinyl-btn.spinning .music-icon { display: none; }
 
-        /* --- 7. OPTIMISATION MOBILE --- */
         @media (max-width: 600px) {
-            .card {
-                padding: 40px 20px;
-                margin-top: 20px;
-            }
-            h1.main-title { font-size: 4rem; line-height: 1.2; }
+            .card { padding: 40px 20px; margin-top: 20px; }
+            h1.main-title { font-size: 3.5rem; }
             h2.names { font-size: 2.2rem; }
-            .fleur-angle { width: 130px; opacity: 0.8; }
-            .top-right { top: -30px; right: -20px; }
-            .bottom-left { bottom: -30px; left: -20px; }
+            .fleur-angle { width: 130px; }
         }
-
     </style>
 </head>
 <body>
@@ -255,23 +237,21 @@
 
     <div class="music-wrapper">
         <div id="vinyl" class="vinyl-btn">
-            <span class="music-icon">♫</span>
+            <span id="music-symbol" class="music-icon">♫</span>
         </div>
     </div>
     
-    <audio id="audio-player" loop>
+    <audio id="audio-player" loop preload="auto">
         <source src="musique.mp3" type="audio/mpeg">
     </audio>
 
     <div class="main-wrapper">
         <div class="card">
-            <img src="haut-droite.png" alt="Fleurs" class="fleur-angle top-right">
-            <img src="bas-gauche.png" alt="Fleurs" class="fleur-angle bottom-left">
+            <img src="haut-droite.png" alt="" class="fleur-angle top-right">
+            <img src="bas-gauche.png" alt="" class="fleur-angle bottom-left">
 
             <h2 class="names">Anael & Gary</h2>
-            
             <p class="text-body">sont heureux de vous convier à célébrer la naissance de</p>
-            
             <h1 class="main-title">Tara Zohar</h1>
             
             <p class="text-body">
@@ -300,10 +280,8 @@
                 <h2 class="rsvp-title">Réponse attendue</h2>
                 <p style="margin-bottom: 20px;">Avant le 08 février 2026</p>
 
-                <form id="rsvp-form" action="https://formspree.io/f/TON_ID_ICI" method="POST">
-                    
+                <form id="rsvp-form" action="https://formspree.io/f/votre_id" method="POST">
                     <input type="text" name="nom" placeholder="Noms & Prénoms" required>
-                    
                     <select id="presence-select" name="presence" required>
                         <option value="" disabled selected>Serez-vous des nôtres ?</option>
                         <option value="Present">Oui, présent(e) avec joie</option>
@@ -315,7 +293,6 @@
                     </div>
 
                     <textarea name="message" rows="3" placeholder="Un petit mot pour Gary & Anael ? (Optionnel)"></textarea>
-                    
                     <button type="submit">Envoyer votre réponse</button>
                 </form>
 
@@ -358,13 +335,84 @@
                     form.style.display = 'none';
                     successMsg.style.display = 'block';
                 } else {
-                    alert("Oups, une erreur est survenue.");
+                    alert("Oups, une erreur est survenue lors de l'envoi.");
                 }
             } catch (error) {
-                alert("Erreur de connexion.");
+                alert("Erreur de connexion au serveur.");
             }
         });
 
-        // --- 2. BOUTON MUSIQUE ---
+        // --- 2. LOGIQUE MUSIQUE ---
         const vinyl = document.getElementById('vinyl');
-        const audio = document.getElementById
+        const audio = document.getElementById('audio-player');
+        const musicSymbol = document.getElementById('music-symbol');
+
+        vinyl.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    vinyl.classList.add('spinning');
+                    musicSymbol.innerText = "⏸";
+                }).catch(e => {
+                    console.error("Erreur lecture audio:", e);
+                    alert("Le fichier musique.mp3 est introuvable ou bloqué.");
+                });
+            } else {
+                audio.pause();
+                vinyl.classList.remove('spinning');
+                musicSymbol.innerText = "♫";
+            }
+        });
+
+        // --- 3. ANIMATION PARTICULES (CANVAS) ---
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.init();
+            }
+            init() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height - canvas.height;
+                this.size = Math.random() * 4 + 1;
+                this.speed = Math.random() * 1 + 0.5;
+                this.velX = Math.random() * 0.5 - 0.25;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.y += this.speed;
+                this.x += this.velX;
+                if (this.y > canvas.height) this.init();
+            }
+            draw() {
+                ctx.fillStyle = `rgba(212, 140, 150, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 70; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>

@@ -15,7 +15,7 @@
             --rose-bg-start: #fff0f5;
             --rose-bg-end: #ffe4e9;
             --rose-fonce: #d48c96;   
-            --rose-titre: #c47c88; /* Un rose un peu plus soutenu pour la lisibilité */
+            --rose-titre: #c47c88; 
             --or-rose: #c79685;     
             --texte: #6d6d6d;
         }
@@ -79,15 +79,14 @@
 
         /* --- 4. TYPOGRAPHIE --- */
         
-        /* CHANGEMENT ICI : Police Parisienne + Couleur plus visible */
         h1.main-title {
             font-family: 'Parisienne', cursive;
-            font-size: 4.8rem; /* Plus gros */
-            color: var(--rose-titre); /* Plus lisible */
+            font-size: 4.8rem; 
+            color: var(--rose-titre); 
             margin: 15px 0;
             line-height: 1.1;
             font-weight: 500;
-            text-shadow: 2px 2px 0px rgba(255,255,255,0.8); /* Contour léger pour détacher du fond */
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
         }
 
         h2.names {
@@ -241,7 +240,6 @@
                 padding: 40px 20px;
                 margin-top: 20px;
             }
-            /* Ajustement pour que Tara Zohar reste lisible sur mobile */
             h1.main-title { font-size: 4rem; line-height: 1.2; }
             h2.names { font-size: 2.2rem; }
             .fleur-angle { width: 130px; opacity: 0.8; }
@@ -272,7 +270,7 @@
 
             <h2 class="names">Anael & Gary</h2>
             
-            <p class="text-body">sont heureux de vous convier à célébrer</p>
+            <p class="text-body">sont heureux de vous convier à célébrer la naissance de</p>
             
             <h1 class="main-title">Tara Zohar</h1>
             
@@ -369,99 +367,4 @@
 
         // --- 2. BOUTON MUSIQUE ---
         const vinyl = document.getElementById('vinyl');
-        const audio = document.getElementById('audio-player');
-        let isPlaying = false;
-
-        vinyl.addEventListener('click', () => {
-            if (!isPlaying) {
-                audio.play();
-                vinyl.classList.add('spinning');
-                isPlaying = true;
-            } else {
-                audio.pause();
-                vinyl.classList.remove('spinning');
-                isPlaying = false;
-            }
-        });
-
-        // --- 3. ANIMATION TÉTINES (Mode Accéléré) ---
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let tetinesArray = [];
-        
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        const tetinePath = new Path2D("M256 0C167.6 0 96 71.6 96 160c0 48.7 21.8 92.8 56.4 122.9C139.1 298.6 128 321.3 128 346.7c0 47.1 38.2 85.3 85.3 85.3h85.3c47.1 0 85.3-38.2 85.3-85.3 0-25.3-11.1-48.1-24.4-63.7C394.2 252.8 416 208.7 416 160 416 71.6 344.4 0 256 0zm0 48c64 0 112 45.4 112 106.7S320 261.3 256 261.3 144 215.9 144 154.7 192 48 256 48zm0 320h-64c-8.8 0-16-7.2-16-16s7.2-16 16-16h64c8.8 0 16 7.2 16 16s-7.2 16-16 16z");
-
-        class Tetine {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = canvas.height + Math.random() * 200; 
-                this.size = Math.random() * 0.04 + 0.03; 
-                
-                // VITESSE INITIALE
-                this.baseSpeed = Math.random() * 2 + 1; 
-                this.speedY = this.baseSpeed;
-                this.speedX = Math.random() * 0.5 - 0.25; 
-                
-                this.angle = Math.random() * 360;
-                this.spin = Math.random() * 0.02 - 0.01; 
-                this.color = Math.random() > 0.5 ? '#d48c96' : '#c79685';
-            }
-
-            update() {
-                // ACCÉLÉRATION : On augmente la vitesse à chaque image
-                this.speedY += 0.05; 
-                
-                this.y -= this.speedY;
-                this.x += this.speedX;
-                this.angle += this.spin;
-
-                // Si la tétine sort en haut, on la remet en bas et on reset la vitesse
-                if (this.y < -100) {
-                    this.y = canvas.height + 100;
-                    this.x = Math.random() * canvas.width;
-                    this.speedY = this.baseSpeed; // Reset de la vitesse
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.scale(this.size, this.size);
-                ctx.rotate(this.angle);
-                ctx.fillStyle = this.color;
-                ctx.globalAlpha = 0.3; 
-                ctx.fill(tetinePath);
-                ctx.beginPath();
-                ctx.arc(256, 420, 60, 0, Math.PI*2);
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
-        function init() {
-            tetinesArray = [];
-            for (let i = 0; i < 30; i++) {
-                tetinesArray.push(new Tetine());
-            }
-        }
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < tetinesArray.length; i++) {
-                tetinesArray[i].update();
-                tetinesArray[i].draw();
-            }
-            requestAnimationFrame(animate);
-        }
-        init();
-        animate();
-
-    </script>
-</body>
-</html>
+        const audio = document.getElementById

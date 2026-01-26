@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
         /* --- 1. CONFIGURATION --- */
@@ -45,10 +45,12 @@
         }
 
         .welcome-names {
-            font-family: 'Parisienne', cursive;
+            font-family: 'Parisienne', cursive; /* Police élégante */
             font-size: 3.5rem;
             color: var(--rose-fonce);
             margin-bottom: 30px;
+            text-align: center;
+            padding: 0 20px;
         }
 
         .btn-enter {
@@ -104,7 +106,7 @@
             text-align: center;
         }
 
-        /* --- ELEMENTS DECO --- */
+        /* --- FLEURS --- */
         .fleur-angle {
             position: absolute;
             width: 180px;
@@ -116,46 +118,54 @@
         .top-right { top: -50px; right: -40px; }
         .bottom-left { bottom: -50px; left: -40px; }
 
-        /* --- TYPO --- */
+        /* --- TYPO (Parisienne) --- */
+        
         h1.main-title {
             font-family: 'Parisienne', cursive;
-            font-size: 4.8rem; 
+            font-size: 5rem;
             color: var(--rose-titre); 
             margin: 15px 0;
             line-height: 1.1;
-            font-weight: 500;
-            text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
         }
 
         h2.names {
             font-family: 'Parisienne', cursive;
-            font-size: 2.8rem;
+            font-size: 3.5rem;
             color: var(--or-rose);
             margin-bottom: 20px;
-            font-weight: 500;
         }
 
-        .text-body { font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; font-weight: 500; }
+        .text-body { 
+            font-size: 1.1rem; 
+            line-height: 1.6; 
+            margin-bottom: 20px; 
+            font-weight: 500; 
+        }
 
-        /* DATE BADGE */
-        .date-badge {
-            display: inline-block;
-            border: 2px solid var(--rose-fonce);
-            border-radius: 50%;
-            width: 130px;
-            height: 130px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin: 30px auto;
+        /* DATE STYLE SIMPLE (SANS ROND) */
+        .date-container {
+            margin: 30px 0;
+            padding: 20px 0;
+            border-top: 1px dashed var(--rose-fonce);
+            border-bottom: 1px dashed var(--rose-fonce);
+        }
+        
+        .date-text {
+            font-size: 1.4rem;
+            color: var(--texte);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .time-text {
             color: var(--rose-fonce);
-            background: rgba(255,255,255,0.8);
+            font-size: 1.2rem;
+            font-family: 'Quicksand', sans-serif;
         }
-        .date-num { font-family: 'Great Vibes', cursive; font-size: 3rem; line-height: 1; }
-        .date-txt { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-        .time { font-weight: bold; color: var(--or-rose); font-size: 1.2rem; display: block; margin-top: 10px;}
 
+        /* NOTICES */
         .polite-notice {
             background-color: #fff0f3;
             border-radius: 15px;
@@ -164,13 +174,14 @@
             color: #8a6a70;
             margin-top: 30px;
             font-style: italic;
+            line-height: 1.8;
         }
 
         /* --- FORMULAIRE --- */
         .rsvp-section { margin-top: 50px; }
         .rsvp-title {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.8rem;
+            font-family: 'Parisienne', cursive;
+            font-size: 3rem;
             color: var(--or-rose);
             margin-bottom: 10px;
         }
@@ -254,8 +265,8 @@
         /* OPTIMISATION MOBILE */
         @media (max-width: 600px) {
             .card { padding: 40px 20px; margin-top: 20px; }
-            h1.main-title { font-size: 4rem; line-height: 1.2; }
-            h2.names { font-size: 2.2rem; }
+            h1.main-title { font-size: 4.5rem; line-height: 1.1; }
+            h2.names { font-size: 3rem; }
             .fleur-angle { width: 130px; opacity: 0.8; }
             .top-right { top: -30px; right: -20px; }
             .bottom-left { bottom: -30px; left: -20px; }
@@ -287,30 +298,26 @@
             <img src="bas-gauche.png" alt="Fleurs" class="fleur-angle bottom-left">
 
             <h2 class="names">Anael & Gary</h2>
-            <p class="text-body">sont heureux de vous convier à célébrer la naissance de</p>
+            
+            <p class="text-body">
+                Sont heureux de vous convier à célébrer le miracle de la naissance de
+            </p>
             
             <h1 class="main-title">Tara Zohar</h1>
             
             <p class="text-body">
-                Lors d'un moment suspendu pour fêter le miracle de sa naissance<br>
-                autour d'un brunch d'exception.
+                Autour d’un brunch d’exception à l’hôtel Shangri La
             </p>
 
-            <div class="date-badge">
-                <span class="date-txt">Dimanche</span>
-                <span class="date-num">8</span>
-                <span class="date-txt">Mars</span>
-            </div>
-            <span class="time">À PARTIR DE 10H30</span>
-
-            <div class="location" style="margin-top: 30px; border-top: 1px dashed #d48c96; padding-top:20px;">
-                <h3 style="font-family:'Great Vibes'; font-size:2rem; color:#5a5a5a; font-weight:normal;">Hôtel Shangri-La</h3>
-                <p>Les Salons Historiques</p>
-                <p style="font-size:0.9rem; color:#999;">10 avenue d’Iéna, 75016 Paris</p>
+            <div class="date-container">
+                <span class="date-text">Le Dimanche 08 Mars 2026</span>
+                <span class="time-text">à partir de 10:30</span>
             </div>
 
             <div class="polite-notice">
-                <p>Dans l’intimité de ce lieu classé, la célébration se fera <strong>sans enfants</strong>. Merci également de ne partager <strong>aucun contenu sur les réseaux sociaux</strong>.</p>
+                <p>Dans l’intimité de ce lieu classé monument historique, la célébration se fera <strong>sans enfants</strong>.</p>
+                <br>
+                <p>Merci également de ne partager <strong>aucun contenu</strong> de l’événement sur les réseaux sociaux.</p>
             </div>
 
             <div class="rsvp-section">
@@ -339,7 +346,7 @@
     </div>
 
     <script>
-        // --- 1. ENTRER SUR LE SITE (Gère le son) ---
+        // --- 1. ENTRER SUR LE SITE ---
         const audio = document.getElementById('audio-player');
         const vinyl = document.getElementById('vinyl');
         const welcomeScreen = document.getElementById('welcome-screen');
@@ -348,16 +355,11 @@
         let isPlaying = false;
 
         function enterSite() {
-            // Lancer la musique
             audio.play().then(() => {
                 isPlaying = true;
                 vinyl.classList.add('spinning');
-            }).catch(error => {
-                console.log("Erreur lecture audio : " + error);
-                // On ne met pas d'alerte pour ne pas gêner, ça jouera peut-être après
-            });
+            }).catch(error => { console.log("Erreur audio: " + error); });
 
-            // Masquer l'écran d'accueil
             welcomeScreen.style.opacity = '0';
             setTimeout(() => {
                 welcomeScreen.style.display = 'none';
@@ -366,7 +368,7 @@
             }, 1000);
         }
 
-        // --- 2. CONTROLE BOUTON VINYLE ---
+        // --- 2. CONTROLE MUSIQUE ---
         vinyl.addEventListener('click', () => {
             if (!isPlaying) {
                 audio.play();
@@ -379,7 +381,7 @@
             }
         });
 
-        // --- 3. FORMULAIRE (Envoi Google Sheet) ---
+        // --- 3. FORMULAIRE ---
         const selectPresence = document.getElementById('presence-select');
         const countContainer = document.getElementById('count-container');
         const countInput = document.getElementById('guest-count');
@@ -399,8 +401,6 @@
 
         form.addEventListener('submit', async function(event) {
             event.preventDefault();
-            
-            // Bouton en chargement
             const btn = form.querySelector('button');
             const originalText = btn.innerText;
             btn.innerText = "Envoi en cours...";
@@ -408,25 +408,21 @@
 
             const data = new FormData(form);
             try {
-                // Utilisation de mode: 'no-cors' pour envoyer vers Google Script sans erreur bloquante
                 await fetch(form.action, {
                     method: form.method,
                     body: data,
                     mode: 'no-cors'
                 });
-                
-                // On suppose que ça a marché (Google Script ne renvoie pas de confirmation lisible en no-cors)
                 form.style.display = 'none';
                 successMsg.style.display = 'block';
-                
             } catch (error) {
-                alert("Erreur de connexion. Vérifiez votre internet.");
+                alert("Erreur de connexion.");
                 btn.innerText = originalText;
                 btn.disabled = false;
             }
         });
 
-        // --- 4. ANIMATION TÉTINES (Accélérée) ---
+        // --- 4. ANIMATION TÉTINES (Rapides) ---
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let tetinesArray = [];
@@ -453,14 +449,14 @@
                 this.color = Math.random() > 0.5 ? '#d48c96' : '#c79685';
             }
             update() {
-                this.speedY += 0.05; // Accélération
+                this.speedY += 0.05; 
                 this.y -= this.speedY;
                 this.x += this.speedX;
                 this.angle += this.spin;
                 if (this.y < -100) {
                     this.y = canvas.height + 100;
                     this.x = Math.random() * canvas.width;
-                    this.speedY = this.baseSpeed; // Reset vitesse
+                    this.speedY = this.baseSpeed;
                 }
             }
             draw() {

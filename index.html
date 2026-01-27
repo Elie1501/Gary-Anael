@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
         /* --- 1. CONFIGURATION --- */
@@ -45,7 +45,7 @@
         }
 
         .welcome-names {
-            font-family: 'Parisienne', cursive; /* Police élégante */
+            font-family: 'Parisienne', cursive;
             font-size: 3.5rem;
             color: var(--rose-fonce);
             margin-bottom: 30px;
@@ -106,7 +106,7 @@
             text-align: center;
         }
 
-        /* --- FLEURS --- */
+        /* --- ELEMENTS DECO --- */
         .fleur-angle {
             position: absolute;
             width: 180px;
@@ -116,34 +116,49 @@
             opacity: 0.9;
         }
         .top-right { top: -50px; right: -40px; }
-        .bottom-left { bottom: -50px; left: -40px; }
+        .bottom-left { bottom: -50px; left: -55px; }
 
-        /* --- TYPO (Parisienne) --- */
-        
-        h1.main-title {
+        /* --- TYPO --- */
+        h2.names {
             font-family: 'Parisienne', cursive;
-            font-size: 5rem;
+            font-size: 3rem;
+            color: var(--or-rose);
+            margin-bottom: 20px;
+        }
+
+        h1.main-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 5.5rem;
             color: var(--rose-titre); 
             margin: 15px 0;
             line-height: 1.1;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
         }
 
-        h2.names {
-            font-family: 'Parisienne', cursive;
-            font-size: 3.5rem;
-            color: var(--or-rose);
-            margin-bottom: 20px;
+        .text-body { font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; font-weight: 500; }
+
+        /* BOUTON WAZE */
+        .waze-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 25px;
+            border: 1px solid var(--rose-fonce);
+            color: var(--rose-fonce);
+            background: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(212, 140, 150, 0.1);
+        }
+        .waze-btn:hover {
+            background: var(--rose-fonce);
+            color: white;
+            transform: translateY(-2px);
         }
 
-        .text-body { 
-            font-size: 1.1rem; 
-            line-height: 1.6; 
-            margin-bottom: 20px; 
-            font-weight: 500; 
-        }
-
-        /* DATE STYLE SIMPLE (SANS ROND) */
+        /* DATE STYLE SIMPLE */
         .date-container {
             margin: 30px 0;
             padding: 20px 0;
@@ -180,7 +195,7 @@
         /* --- FORMULAIRE --- */
         .rsvp-section { margin-top: 50px; }
         .rsvp-title {
-            font-family: 'Parisienne', cursive;
+            font-family: 'Great Vibes', cursive;
             font-size: 3rem;
             color: var(--or-rose);
             margin-bottom: 10px;
@@ -266,10 +281,10 @@
         @media (max-width: 600px) {
             .card { padding: 40px 20px; margin-top: 20px; }
             h1.main-title { font-size: 4.5rem; line-height: 1.1; }
-            h2.names { font-size: 3rem; }
+            h2.names { font-size: 2.8rem; }
             .fleur-angle { width: 130px; opacity: 0.8; }
             .top-right { top: -30px; right: -20px; }
-            .bottom-left { bottom: -30px; left: -20px; }
+            .bottom-left { bottom: -30px; left: -60px; }
         }
     </style>
 </head>
@@ -306,8 +321,17 @@
             <h1 class="main-title">Tara Zohar</h1>
             
             <p class="text-body">
-                Autour d’un brunch d’exception à l’hôtel Shangri La
+                Autour d’un brunch d’exception<br>
+                <strong>à l’hôtel Le Shangri-La</strong>
             </p>
+            
+            <p style="font-size:0.95rem; color:#888; margin-bottom:15px;">
+                10 avenue d’Iéna<br>75016 Paris
+            </p>
+
+            <a href="https://waze.com/ul?q=10%20avenue%20d%27Iena%2075016%20Paris&navigate=yes" target="_blank" class="waze-btn">
+                Waze 🚗
+            </a>
 
             <div class="date-container">
                 <span class="date-text">Le Dimanche 08 Mars 2026</span>
@@ -422,7 +446,7 @@
             }
         });
 
-        // --- 4. ANIMATION TÉTINES (Rapides) ---
+        // --- 4. ANIMATION TÉTINES ---
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let tetinesArray = [];

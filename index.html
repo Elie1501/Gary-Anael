@@ -95,7 +95,7 @@
             z-index: 10;
             width: 100%;
             max-width: 650px;
-            margin-top: 40px;
+            margin-top: 60px; /* Augmenté pour laisser passer la fleur du haut */
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
@@ -115,8 +115,17 @@
             mix-blend-mode: multiply;
             opacity: 0.9;
         }
-        .top-right { top: -50px; right: -40px; }
-        .bottom-left { bottom: -50px; left: -30px; }
+
+        .top-right { 
+            top: -50px; 
+            right: -40px; 
+        }
+
+        .bottom-left { 
+            bottom: -50px; 
+            left: -40px; /* Symétrie parfaite avec la droite */
+            transform: scaleX(-1); /* Effet miroir pour pointer vers le centre */
+        }
 
         /* --- TYPO --- */
         h2.names {
@@ -137,7 +146,6 @@
 
         .text-body { font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; font-weight: 500; }
 
-        /* BOUTON WAZE */
         .waze-btn {
             display: inline-block;
             margin-top: 10px;
@@ -158,7 +166,6 @@
             transform: translateY(-2px);
         }
 
-        /* DATE STYLE SIMPLE */
         .date-container {
             margin: 30px 0;
             padding: 20px 0;
@@ -180,7 +187,6 @@
             font-family: 'Quicksand', sans-serif;
         }
 
-        /* NOTICES */
         .polite-notice {
             background-color: #fff0f3;
             border-radius: 15px;
@@ -192,7 +198,6 @@
             line-height: 1.8;
         }
 
-        /* --- FORMULAIRE --- */
         .rsvp-section { margin-top: 50px; }
         .rsvp-title {
             font-family: 'Great Vibes', cursive;
@@ -246,7 +251,6 @@
             font-size: 1.1rem;
         }
 
-        /* --- MUSIQUE FLOTTANTE --- */
         .music-wrapper {
             position: fixed;
             bottom: 20px;
@@ -277,14 +281,18 @@
         .music-icon { font-size: 24px; color: white; z-index: 3; pointer-events: none; }
         .vinyl-btn.spinning .music-icon { display: none; }
 
-        /* OPTIMISATION MOBILE */
+        /* OPTIMISATION RESPONSIVE MOBILE */
         @media (max-width: 600px) {
-            .card { padding: 40px 20px; margin-top: 20px; }
-            h1.main-title { font-size: 4.5rem; line-height: 1.1; }
+            .card { 
+                padding: 40px 20px; 
+                margin-top: 40px; 
+                width: 88%; /* Laisse de la place pour les fleurs qui dépassent */
+            }
+            h1.main-title { font-size: 4.5rem; }
             h2.names { font-size: 2.8rem; }
-            .fleur-angle { width: 130px; opacity: 0.8; }
-            .top-right { top: -30px; right: -20px; }
-            .bottom-left { bottom: -30px; left: -60px; }
+            .fleur-angle { width: 110px; opacity: 0.8; }
+            .top-right { top: -30px; right: -25px; }
+            .bottom-left { bottom: -30px; left: -25px; }
         }
     </style>
 </head>
@@ -370,7 +378,6 @@
     </div>
 
     <script>
-        // --- 1. ENTRER SUR LE SITE ---
         const audio = document.getElementById('audio-player');
         const vinyl = document.getElementById('vinyl');
         const welcomeScreen = document.getElementById('welcome-screen');
@@ -392,7 +399,6 @@
             }, 1000);
         }
 
-        // --- 2. CONTROLE MUSIQUE ---
         vinyl.addEventListener('click', () => {
             if (!isPlaying) {
                 audio.play();
@@ -405,7 +411,6 @@
             }
         });
 
-        // --- 3. FORMULAIRE ---
         const selectPresence = document.getElementById('presence-select');
         const countContainer = document.getElementById('count-container');
         const countInput = document.getElementById('guest-count');
@@ -426,7 +431,6 @@
         form.addEventListener('submit', async function(event) {
             event.preventDefault();
             const btn = form.querySelector('button');
-            const originalText = btn.innerText;
             btn.innerText = "Envoi en cours...";
             btn.disabled = true;
 
@@ -441,12 +445,12 @@
                 successMsg.style.display = 'block';
             } catch (error) {
                 alert("Erreur de connexion.");
-                btn.innerText = originalText;
+                btn.innerText = "Envoyer votre réponse";
                 btn.disabled = false;
             }
         });
 
-        // --- 4. ANIMATION TÉTINES ---
+        // ANIMATION TÉTINES
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let tetinesArray = [];

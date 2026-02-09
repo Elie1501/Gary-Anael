@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Parisienne&family=Quicksand:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
     <style>
         /* --- 1. CONFIGURATION --- */
@@ -116,7 +116,7 @@
             opacity: 0.9;
         }
         .top-right { top: -50px; right: -40px; }
-        .bottom-left { bottom: -50px; left: -45px; }
+        .bottom-left { bottom: -50px; left: -30px; }
 
         /* --- TYPO --- */
         h2.names {
@@ -199,6 +199,15 @@
             font-size: 3rem;
             color: var(--or-rose);
             margin-bottom: 10px;
+        }
+
+        /* --- STYLE POUR LE TEXTE RSVP EXTRA GRAS --- */
+        .deadline-text {
+            margin-bottom: 20px;
+            font-weight: 900; /* Extra-Gras */
+            color: #b86e7a; /* Un peu plus foncé pour accentuer l'impact */
+            font-size: 1.1rem;
+            text-transform: uppercase;
         }
 
         input, select, textarea {
@@ -346,7 +355,7 @@
 
             <div class="rsvp-section">
                 <h2 class="rsvp-title">Réponse attendue</h2>
-                <p style="margin-bottom: 20px;">Avant le 08 février 2026</p>
+                <p class="deadline-text">Réponse souhaitée dès réception</p>
 
                 <form id="rsvp-form" action="https://script.google.com/macros/s/AKfycbz1hgDsxNRFFg_tjjmxic1SFUXNlJquqxYJhMwjCscE_CklFR_fJnpucDebODfige9nzw/exec" method="POST">
                     <input type="text" name="nom" placeholder="Noms & Prénoms" required>
@@ -370,7 +379,7 @@
     </div>
 
     <script>
-        // --- 1. ENTRER SUR LE SITE ---
+        // ... (Script identique au précédent) ...
         const audio = document.getElementById('audio-player');
         const vinyl = document.getElementById('vinyl');
         const welcomeScreen = document.getElementById('welcome-screen');
@@ -392,7 +401,6 @@
             }, 1000);
         }
 
-        // --- 2. CONTROLE MUSIQUE ---
         vinyl.addEventListener('click', () => {
             if (!isPlaying) {
                 audio.play();
@@ -405,7 +413,6 @@
             }
         });
 
-        // --- 3. FORMULAIRE ---
         const selectPresence = document.getElementById('presence-select');
         const countContainer = document.getElementById('count-container');
         const countInput = document.getElementById('guest-count');
@@ -426,7 +433,6 @@
         form.addEventListener('submit', async function(event) {
             event.preventDefault();
             const btn = form.querySelector('button');
-            const originalText = btn.innerText;
             btn.innerText = "Envoi en cours...";
             btn.disabled = true;
 
@@ -441,12 +447,11 @@
                 successMsg.style.display = 'block';
             } catch (error) {
                 alert("Erreur de connexion.");
-                btn.innerText = originalText;
+                btn.innerText = "Envoyer votre réponse";
                 btn.disabled = false;
             }
         });
 
-        // --- 4. ANIMATION TÉTINES ---
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let tetinesArray = [];
